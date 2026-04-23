@@ -1,0 +1,13 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: burlywood;
+}
+
+.coordinate-container {
+  display: flex;
+}
+
+.flex {
+  display: flex;
+  margin-right: 20px;
+}
