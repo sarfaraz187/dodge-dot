@@ -5,6 +5,9 @@ function trackMouseMovement() {
 
     document.getElementById("XCoordinateVal").textContent = x;
     document.getElementById("YCoordinateVal").textContent = y;
+
+    document.getElementById("dot").style.left = `${x}px`;
+    document.getElementById("dot").style.top = `${y}px`;
   });
 }
 

@@ -3,11 +3,39 @@ body {
   background-color: burlywood;
 }
 
+h1,
+h2,
+h3 {
+  margin: 0px;
+}
+
 .coordinate-container {
-  display: flex;
+  display: inline-block;
+  margin-left: auto;
+  padding: 10px;
+  border: 2px solid black;
+  background-color: whitesmoke;
+  border-radius: 7px;
+  min-width: 280px;
+}
+
+.coordinate-container > h3 {
+  padding-bottom: 5px;
+}
+
+.mr-10 {
+  margin-right: 10px;
 }
 
 .flex {
   display: flex;
-  margin-right: 20px;
+}
+
+.dot {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: cadetblue;
+  border-radius: 50%;
+  pointer-events: none;
 }
