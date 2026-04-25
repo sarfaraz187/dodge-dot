@@ -17,6 +17,9 @@ h3 {
   background-color: whitesmoke;
   border-radius: 7px;
   min-width: 280px;
+  position: absolute;
+  z-index: 1;
+  right: 10px;
 }
 
 .coordinate-container > h3 {

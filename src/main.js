@@ -1,5 +1,7 @@
 const SPEED_INTERVAL = 7; // seconds
+const NUMBER_OF_SHAPES = 20;
 let isKeyPressed = false;
+let score = 0;
 
 document.body.onkeyup = function (e) {
   if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
@@ -7,7 +9,7 @@ document.body.onkeyup = function (e) {
       timeTracker();
       isKeyPressed = true;
 
-      // createObjects();
+      createObjects();
     }
   }
 };
@@ -29,48 +31,45 @@ function trackMouseMovement() {
 }
 
 function createObjects() {
-  shapes.forEach((shape) => {
+  for (let i = 0; i < shapes.length + NUMBER_OF_SHAPES; i++) {
+    const shapeElement = document.createElement("div");
+    let index = Math.floor(Math.random() * shapes.length); // Random shape index
+
+    // Current shape object
+    let shape = shapes[index];
+
     // Movement coordinates
     let dx = Math.random();
     let dy = Math.random();
 
     // Current Coordinates
-    let xPos = shape.coordinates.x + dx;
-    let yPos = shape.coordinates.y + dy;
+    let xPos = Math.random() * window.innerWidth;
+    let yPos = Math.random() * window.innerHeight;
 
-    const shapeElement = document.createElement("div");
-    shapeElement.style.position = "absolute";
-    shapeElement.style.width = `${shape.sizes.width}px`;
-    shapeElement.style.height = `${shape.sizes.height}px`;
-    shapeElement.style.backgroundColor = shape.color;
-    shapeElement.style.left = `${shape.coordinates.x}px`;
-    shapeElement.style.top = `${shape.coordinates.y}px`;
+    const width = Math.floor(Math.random() * 70) + 10;
+    const height = Math.floor(Math.random() * 150) + 10;
 
-    if (shape.borderRadius) {
-      shapeElement.style.borderRadius = shape.borderRadius;
-    }
-
-    console.log("Shape Element:", shapeElement);
-    document.getElementById("shapesContainer").appendChild(shapeElement);
+    console.log(width, height);
+    applyStyles(shapeElement, shape, width, height);
     requestAnimationFrame(move);
 
     // Move objects
     function move() {
-      if (xPos < 0 || xPos > window.innerWidth - shape.sizes.width) {
+      if (xPos < 0 || xPos > window.innerWidth - width) {
         dx = dx * -1;
       }
 
-      if (yPos < 0 || yPos > window.innerHeight - shape.sizes.height) {
+      if (yPos < 0 || yPos > window.innerHeight - height) {
         dy = dy * -1;
       }
 
       shapeElement.style.left = xPos + "px";
       shapeElement.style.top = yPos + "px";
-      console.log(`Shape: ${shape.name}, X: ${xPos}, Y: ${yPos}`);
+      // console.log(`Shape: ${shape.name}, X: ${xPos}, Y: ${yPos}`);
 
       xPos = xPos + dx;
       yPos = yPos + dy;
       requestAnimationFrame(move);
     }
-  });
+  }
 }
