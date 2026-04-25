@@ -1,16 +1,31 @@
+// Game configuration constants
 const SPEED_INTERVAL = 7; // seconds
-const NUMBER_OF_SHAPES = 25;
+const NUMBER_OF_SHAPES = 10;
+const DIFFICULTY_INTERVAL = 7000; // milliseconds
+
+// Event and game tracking variables
 let isKeyPressed = false;
 let score = 0;
 let isGameOver = false;
+let difficultyLevel = 1;
 
+// Interval with increasing difficulty level
+const levelInterval = setInterval(() => {
+  if (isKeyPressed && !isGameOver) {
+    difficultyLevel += 1;
+    console.log(`Difficulty Level: ${difficultyLevel}`);
+  }
+}, DIFFICULTY_INTERVAL);
+
+// Timer interval to track score based on time survived
 let timerInterval = setInterval(() => {
   if (isKeyPressed) {
     score += 1;
-    document.getElementById("timerVal").textContent = score;
+    document.getElementById("scoreVal").textContent = score;
   }
 }, 1000);
 
+// Event listener for space bar to start the game
 document.body.onkeyup = function (e) {
   if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
     if (!isKeyPressed) {
@@ -20,6 +35,7 @@ document.body.onkeyup = function (e) {
   }
 };
 
+alert("Press the space bar to start the game!");
 trackMouseMovement();
 
 function trackMouseMovement() {
@@ -64,16 +80,21 @@ function createObjects() {
       // Check if the game is over or not
       if (isGameOver) return;
 
-      // move shape to its new position
-      if (xPos < 0 || xPos > window.innerWidth - width) dx = dx * -1;
-      if (yPos < 0 || yPos > window.innerHeight - height) dy = dy * -1;
+      // Reverse direction if the shape hits the window boundaries
+      if (xPos < 0 || xPos > window.innerWidth - width) {
+        dx = dx * -1;
+      }
+
+      if (yPos < 0 || yPos > window.innerHeight - height) {
+        dy = dy * -1;
+      }
 
       htmlElement.style.left = xPos + "px";
       htmlElement.style.top = yPos + "px";
       // console.log(`Shape: ${shape.name}, X: ${xPos}, Y: ${yPos}`);
 
-      xPos = xPos + dx;
-      yPos = yPos + dy;
+      xPos = xPos + dx * difficultyLevel;
+      yPos = yPos + dy * difficultyLevel;
 
       checkCollision(htmlElement);
       requestAnimationFrame(move);
@@ -87,5 +108,7 @@ function checkCollision(htmlElement) {
   if (hasCollision) {
     isGameOver = true;
     clearInterval(timerInterval);
+    clearInterval(levelInterval);
+    alert(`Game Over! Your score is: ${score}`);
   }
 }

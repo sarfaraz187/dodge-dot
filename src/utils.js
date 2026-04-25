@@ -7,8 +7,8 @@ function applyStyles(htmlElement, shape, width, height, xPos, yPos) {
   htmlElement.style.width = `${width}px`;
   htmlElement.style.height = `${height}px`;
   htmlElement.style.backgroundColor = shape.color;
-  htmlElement.style.left = `${yPos}px`;
-  htmlElement.style.top = `${xPos}px`;
+  htmlElement.style.left = `${xPos}px`;
+  htmlElement.style.top = `${yPos}px`;
 
   if (shape.borderRadius) {
     htmlElement.style.borderRadius = shape.borderRadius;
