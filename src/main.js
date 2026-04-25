@@ -2,13 +2,19 @@ const SPEED_INTERVAL = 7; // seconds
 const NUMBER_OF_SHAPES = 25;
 let isKeyPressed = false;
 let score = 0;
+let isGameOver = false;
+
+let timerInterval = setInterval(() => {
+  if (isKeyPressed) {
+    score += 1;
+    document.getElementById("timerVal").textContent = score;
+  }
+}, 1000);
 
 document.body.onkeyup = function (e) {
   if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
     if (!isKeyPressed) {
-      timeTracker();
       isKeyPressed = true;
-
       createObjects();
     }
   }
@@ -32,7 +38,7 @@ function trackMouseMovement() {
 
 function createObjects() {
   for (let i = 0; i < NUMBER_OF_SHAPES; i++) {
-    const shapeElement = document.createElement("div");
+    const htmlElement = document.createElement("div");
     let index = Math.floor(Math.random() * shapes.length); // Random shape index
 
     // Current shape object
@@ -49,27 +55,37 @@ function createObjects() {
     const width = Math.floor(Math.random() * 70) + 10;
     const height = Math.floor(Math.random() * 150) + 10;
 
-    console.log(width, height);
-    applyStyles(shapeElement, shape, width, height, xPos, yPos);
+    // console.log(width, height);
+    applyStyles(htmlElement, shape, width, height, xPos, yPos);
     requestAnimationFrame(move);
 
     // Move objects
     function move() {
-      if (xPos < 0 || xPos > window.innerWidth - width) {
-        dx = dx * -1;
-      }
+      // Check if the game is over or not
+      if (isGameOver) return;
 
-      if (yPos < 0 || yPos > window.innerHeight - height) {
-        dy = dy * -1;
-      }
+      // move shape to its new position
+      if (xPos < 0 || xPos > window.innerWidth - width) dx = dx * -1;
+      if (yPos < 0 || yPos > window.innerHeight - height) dy = dy * -1;
 
-      shapeElement.style.left = xPos + "px";
-      shapeElement.style.top = yPos + "px";
+      htmlElement.style.left = xPos + "px";
+      htmlElement.style.top = yPos + "px";
       // console.log(`Shape: ${shape.name}, X: ${xPos}, Y: ${yPos}`);
 
       xPos = xPos + dx;
       yPos = yPos + dy;
+
+      checkCollision(htmlElement);
       requestAnimationFrame(move);
     }
+  }
+}
+
+function checkCollision(htmlElement) {
+  const hasCollision = isCollide(document.getElementById("dot").getBoundingClientRect(), htmlElement.getBoundingClientRect());
+
+  if (hasCollision) {
+    isGameOver = true;
+    clearInterval(timerInterval);
   }
 }

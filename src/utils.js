@@ -1,22 +1,19 @@
-function timeTracker() {
-  let timerInterval = setInterval(() => {
-    score += 1;
-    document.getElementById("timerVal").textContent = score;
-  }, 1000);
+function isCollide(a, b) {
+  return !(a.y + a.height < b.y || a.y > b.y + b.height || a.x + a.width < b.x || a.x > b.x + b.width);
 }
 
-function applyStyles(shapeElement, shape, width, height, xPos, yPos) {
-  shapeElement.style.position = "absolute";
-  shapeElement.style.width = `${width}px`;
-  shapeElement.style.height = `${height}px`;
-  shapeElement.style.backgroundColor = shape.color;
-  shapeElement.style.top = `${xPos}px`;
-  shapeElement.style.left = `${yPos}px`;
+function applyStyles(htmlElement, shape, width, height, xPos, yPos) {
+  htmlElement.style.position = "absolute";
+  htmlElement.style.width = `${width}px`;
+  htmlElement.style.height = `${height}px`;
+  htmlElement.style.backgroundColor = shape.color;
+  htmlElement.style.left = `${yPos}px`;
+  htmlElement.style.top = `${xPos}px`;
 
   if (shape.borderRadius) {
-    shapeElement.style.borderRadius = shape.borderRadius;
+    htmlElement.style.borderRadius = shape.borderRadius;
   }
 
-  // console.log("Shape Element:", shapeElement);
-  document.getElementById("shapesContainer").appendChild(shapeElement);
+  // console.log("Shape Element:", htmlElement);
+  document.getElementById("shapesContainer").appendChild(htmlElement);
 }
