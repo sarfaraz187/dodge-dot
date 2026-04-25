@@ -1,4 +1,18 @@
 const SPEED_INTERVAL = 7; // seconds
+let isKeyPressed = false;
+
+document.body.onkeyup = function (e) {
+  if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
+    if (!isKeyPressed) {
+      timeTracker();
+      isKeyPressed = true;
+
+      // createObjects();
+    }
+  }
+};
+
+trackMouseMovement();
 
 function trackMouseMovement() {
   document.addEventListener("mousemove", (e) => {
@@ -60,6 +74,3 @@ function createObjects() {
     }
   });
 }
-
-trackMouseMovement();
-// createObjects();

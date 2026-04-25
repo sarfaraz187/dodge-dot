@@ -22,5 +22,6 @@ function timeTracker() {
   let score = 0;
   let timerInterval = setInterval(() => {
     score += 1;
+    document.getElementById("timerVal").textContent = score;
   }, 1000);
 }
