@@ -1,5 +1,4 @@
 // Game configuration constants
-const SPEED_INTERVAL = 7; // seconds
 const NUMBER_OF_SHAPES = 10;
 const DIFFICULTY_INTERVAL = 7000; // milliseconds
 
@@ -13,7 +12,6 @@ let difficultyLevel = 1;
 const levelInterval = setInterval(() => {
   if (isKeyPressed && !isGameOver) {
     difficultyLevel += 1;
-    console.log(`Difficulty Level: ${difficultyLevel}`);
   }
 }, DIFFICULTY_INTERVAL);
 
@@ -35,8 +33,8 @@ document.body.onkeyup = function (e) {
   }
 };
 
-alert("Press the space bar to start the game!");
 trackMouseMovement();
+createMouseTracker();
 
 function trackMouseMovement() {
   document.addEventListener("mousemove", (e) => {
@@ -71,7 +69,6 @@ function createObjects() {
     const width = Math.floor(Math.random() * 70) + 10;
     const height = Math.floor(Math.random() * 150) + 10;
 
-    // console.log(width, height);
     applyStyles(htmlElement, shape, width, height, xPos, yPos);
     requestAnimationFrame(move);
 
@@ -91,7 +88,6 @@ function createObjects() {
 
       htmlElement.style.left = xPos + "px";
       htmlElement.style.top = yPos + "px";
-      // console.log(`Shape: ${shape.name}, X: ${xPos}, Y: ${yPos}`);
 
       xPos = xPos + dx * difficultyLevel;
       yPos = yPos + dy * difficultyLevel;
@@ -109,6 +105,5 @@ function checkCollision(htmlElement) {
     isGameOver = true;
     clearInterval(timerInterval);
     clearInterval(levelInterval);
-    alert(`Game Over! Your score is: ${score}`);
   }
 }
