@@ -1,5 +1,5 @@
 const SPEED_INTERVAL = 7; // seconds
-const NUMBER_OF_SHAPES = 20;
+const NUMBER_OF_SHAPES = 25;
 let isKeyPressed = false;
 let score = 0;
 
@@ -31,7 +31,7 @@ function trackMouseMovement() {
 }
 
 function createObjects() {
-  for (let i = 0; i < shapes.length + NUMBER_OF_SHAPES; i++) {
+  for (let i = 0; i < NUMBER_OF_SHAPES; i++) {
     const shapeElement = document.createElement("div");
     let index = Math.floor(Math.random() * shapes.length); // Random shape index
 
@@ -50,7 +50,7 @@ function createObjects() {
     const height = Math.floor(Math.random() * 150) + 10;
 
     console.log(width, height);
-    applyStyles(shapeElement, shape, width, height);
+    applyStyles(shapeElement, shape, width, height, xPos, yPos);
     requestAnimationFrame(move);
 
     // Move objects
