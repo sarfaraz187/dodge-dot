@@ -49,6 +49,9 @@ function trackMouseMovement() {
     xHistory.push(x);
     yHistory.push(y);
 
+    if (xHistory.length > 100) xHistory.shift();
+    if (yHistory.length > 100) yHistory.shift();
+
     // Positioning the dot at the center of the mouse cursor.
     document.getElementById("dot").style.left = `${x - 25}px`;
     document.getElementById("dot").style.top = `${y - 25}px`;
