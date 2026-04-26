@@ -1,23 +1,26 @@
 // Game configuration constants
-const NUMBER_OF_SHAPES = 10;
+const NUMBER_OF_SHAPES = 15;
 const DIFFICULTY_INTERVAL = 7000; // milliseconds
 
 // Event and game tracking variables
-let isKeyPressed = false;
+let isSpaceBarPressed = false;
 let score = 0;
 let isGameOver = false;
 let difficultyLevel = 1;
 
+let xHistory = [];
+let yHistory = [];
+
 // Interval with increasing difficulty level
 const levelInterval = setInterval(() => {
-  if (isKeyPressed && !isGameOver) {
+  if (isSpaceBarPressed && !isGameOver) {
     difficultyLevel += 1;
   }
 }, DIFFICULTY_INTERVAL);
 
 // Timer interval to track score based on time survived
 let timerInterval = setInterval(() => {
-  if (isKeyPressed) {
+  if (isSpaceBarPressed) {
     score += 1;
     document.getElementById("scoreVal").textContent = score;
   }
@@ -26,15 +29,14 @@ let timerInterval = setInterval(() => {
 // Event listener for space bar to start the game
 document.body.onkeyup = function (e) {
   if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
-    if (!isKeyPressed) {
-      isKeyPressed = true;
+    if (!isSpaceBarPressed) {
+      isSpaceBarPressed = true;
       createObjects();
     }
   }
 };
 
 trackMouseMovement();
-createMouseTracker();
 
 function trackMouseMovement() {
   document.addEventListener("mousemove", (e) => {
@@ -44,9 +46,14 @@ function trackMouseMovement() {
     document.getElementById("XCoordinateVal").textContent = x;
     document.getElementById("YCoordinateVal").textContent = y;
 
+    xHistory.push(x);
+    yHistory.push(y);
+
     // Positioning the dot at the center of the mouse cursor.
     document.getElementById("dot").style.left = `${x - 25}px`;
     document.getElementById("dot").style.top = `${y - 25}px`;
+
+    if (!isGameOver) mouseTracker();
   });
 }
 

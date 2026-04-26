@@ -17,14 +17,19 @@ function applyStyles(htmlElement, shape, width, height, xPos, yPos) {
   document.getElementById("shapesContainer").appendChild(htmlElement);
 }
 
-function createMouseTracker() {
+function mouseTracker() {
   const myCanvas = document.getElementById("myCanvas");
   const ctx = myCanvas.getContext("2d");
 
+  ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
   ctx.beginPath();
-  ctx.moveTo(20, 20);
-  ctx.lineTo(20, 100);
-  ctx.lineTo(70, 100);
+
+  ctx.moveTo(0, (xHistory[0] / window.innerWidth) * myCanvas.height);
+  for (let i = 0; i < xHistory.length - 1; i++) {
+    const canvasX = (i / xHistory.length) * myCanvas.width;
+    const canvasY = (xHistory[i] / window.innerWidth) * myCanvas.height;
+    ctx.lineTo(canvasX, canvasY);
+  }
   ctx.strokeStyle = "red";
   ctx.stroke();
 }
