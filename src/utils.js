@@ -17,19 +17,18 @@ function applyStyles(htmlElement, shape, width, height, xPos, yPos) {
   document.getElementById("shapesContainer").appendChild(htmlElement);
 }
 
-function mouseTracker() {
+function drawLine(axisHistory, maxValue, color) {
   const myCanvas = document.getElementById("myCanvas");
   const ctx = myCanvas.getContext("2d");
 
-  ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
   ctx.beginPath();
 
-  ctx.moveTo(0, (xHistory[0] / window.innerWidth) * myCanvas.height);
-  for (let i = 0; i < xHistory.length - 1; i++) {
-    const canvasX = (i / xHistory.length) * myCanvas.width;
-    const canvasY = (xHistory[i] / window.innerWidth) * myCanvas.height;
+  ctx.moveTo(0, (axisHistory[0] / maxValue) * myCanvas.height);
+  for (let i = 0; i < axisHistory.length - 1; i++) {
+    const canvasX = (i / axisHistory.length) * myCanvas.width;
+    const canvasY = (axisHistory[i] / maxValue) * myCanvas.height;
     ctx.lineTo(canvasX, canvasY);
   }
-  ctx.strokeStyle = "red";
+  ctx.strokeStyle = color;
   ctx.stroke();
 }

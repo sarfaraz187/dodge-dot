@@ -117,3 +117,12 @@ function checkCollision(htmlElement) {
     clearInterval(levelInterval);
   }
 }
+
+function mouseTracker() {
+  const myCanvas = document.getElementById("myCanvas");
+  const ctx = myCanvas.getContext("2d");
+
+  ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+  drawLine(xHistory, window.innerWidth, "red");
+  drawLine(yHistory, window.innerHeight, "blue");
+}
